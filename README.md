@@ -1,2 +1,2 @@
 # hello-world
-myfirstproject
+hello everyone!This is my first time to use git.Thanks to erveryone!
