@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VUE示例</title>
+    </head>
+    <body>
+        <div id="app">
+            <ul>
+                <li v-for="book in books">{{ book.name }}</li>
+            </ul>
+            <input type="text" v-model="name" placeholder="你的名字">
+            <h1>你好，{{ name }}</h1>
+            <h1>{{ date }}</h1>
+        </div>
+        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+        <script>
+            new Vue({
+                el:'#app',
+                data:{
+                    books:[
+                        { name: '《vue实战》'},
+                        { name: '《java从入门到放弃》'},
+                        { name: '《mysql从精通到删库跑路》'}
+                    ],
+                    name:'',
+                    date:new Date()
+                },
+                created:function(){
+                    console.log(this.books);
+                },
+                mounted:function(){
+                    var _this = this;//声明一个变量指向vue实例this，保证作用域一致
+                    this.timer = setInterval(function(){
+                        _this.date = new Date();//修改数据date
+                    },1000);
+                },
+                beforeDestroy:function(){
+                    if(this.timer){
+                        clearInterval(this.timer);//在Vue实例销毁前，清除我们的定时器
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
+        
