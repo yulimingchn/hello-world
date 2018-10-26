@@ -5,19 +5,35 @@
     <title>VUE示例</title>
     </head>
     <body>
-        <div id="app1"></div>
+        <div id="app1">
+            <template v-if="type  === 'name'">
+                <label>用户名：</label>
+                <input placeholder="输入用户名" key="name-input">
+            </template>
+            <template v-else>
+                <label>邮箱：</label>
+                <input placeholder="输入邮箱" key="mail-input">
+            </template>
+            <button @click="handleToggleClick">切换输入类型</button>
+        </div>
         <div id="app">
             <ul>
-                <li v-for="book in books">{{ book.name }}</li>
+                <li v-for="(book,index) of books">{{index}} - {{ book.name }}</li>
+            </ul>
+            <ul>
+                <template v-for="obj in bookObjs">
+                    <li>书名：{{ obj.name }}</li>
+                    <li>作者：{{ obj.author }}</li>
+                </template>
             </ul>
             <input type="text" v-model="name" placeholder="你的名字">
             <h1>你好，{{ name }}</h1>
-            <h1>{{ date | formatDate }}</h1>
+            <h1 :style="styleDate">{{ date | formatDate }}</h1>
             <span v-html="link"></span>
             {{ number /10}}
             {{isOk ? '确定':'取消'}}
             {{ reversedText }}
-            <h1>总价：{{ prices }}</h1>
+            <h1 :style="{'color':color,'fontSize':fontSize + 'px'}">总价：{{ prices }}</h1>
             <h1>姓名：{{ fullName }}</h1>
             <p v-if="show">显示这段文本</p>
             <button @click="handleClose">点击隐藏</button>
@@ -32,7 +48,13 @@
             var app1 = new Vue({
                 el:'#app1',
                 data:{
-                    text : '123,456,abc'
+                    text : '123,456,abc',
+                    type:'name'
+                },
+                methods: {
+                    handleToggleClick: function(){
+                        this.type = this.type === 'name' ? 'mail' : 'name';
+                    }
                 }
             });
             var app =new Vue({
@@ -43,7 +65,27 @@
                             { name: '《java从入门到放弃》'},
                             { name: '《mysql从精通到删库跑路》'}
                         ],
+                        bookObjs:[
+                            { 
+                                name: '《vue实战2》',
+                                author:'大仲马'
+                            },
+                            {
+                                 name: '《java从入门到放弃2》',
+                                 author:'黎明'
+                                 },
+                            { 
+                                name: '《mysql从精通到删库跑路2》',
+                                author:'AndyLiu'
+                                }
+                        ],
+                        styleDate:{
+                            color:'blue',
+                            fontSize:14+'px'
+                        },
                         name:'',
+                        color:'red',
+                        fontSize:14,
                         date:new Date(),
                         link:'<a href="#">这是一个连接</a>',
                         number:100,
