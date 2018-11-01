@@ -15,8 +15,12 @@
                 <input placeholder="输入邮箱" key="mail-input">
             </template>
             <button @click="handleToggleClick">切换输入类型</button>
+            <span>点击次数：{{ counter}}</span>
+            <button @click="handleAdd()">+ 1</button>
+            <button @click="handleAdd(10)">+ 10</button>
         </div>
         <div id="app">
+            <span v-for="n in 10">{{n}}</span>
             <ul>
                 <li v-for="(book,index) of books">{{index}} - {{ book.name }}</li>
             </ul>
@@ -37,7 +41,7 @@
             <h1>姓名：{{ fullName }}</h1>
             <p v-if="show">显示这段文本</p>
             <button @click="handleClose">点击隐藏</button>
-            <a :href="url">gitHub链接</a>
+            <a :href="url" @click="handleClick('禁止打开',$event)">gitHub链接</a>
             <img :src = "imgUrl">
         </div>
         <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
@@ -49,11 +53,17 @@
                 el:'#app1',
                 data:{
                     text : '123,456,abc',
-                    type:'name'
+                    type:'name',
+                    counter:0
                 },
                 methods: {
                     handleToggleClick: function(){
                         this.type = this.type === 'name' ? 'mail' : 'name';
+                    },
+                    handleAdd :function(count){
+                        count = count || 1;
+                        //this指向当前vue实例app
+                        this.counter += count;
                     }
                 }
             });
@@ -124,6 +134,10 @@
                     methods:{
                         handleClose:function(){
                             this.show = false;
+                        },
+                        handleClick : function(message,event){
+                            event.preventDefault();
+                            window.alert(message);
                         }
                     },
                     filters: {
