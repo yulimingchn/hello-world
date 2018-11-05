@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VUEComponent</title>
+    </head>
+    <body>
+        <div id="app">
+            <table>
+               
+                <tbody is="my-component"></tbody>
+            </table>
+         <my-component></my-component>
+         <my-component1></my-component1>
+         <input type="text" v-model="parentMessage">
+         <my-component2 :message="parentMessage"></my-component2>
+         <my-component3 :width="100"></my-component3>
+        
+        </div>
+        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+        <script>
+            //var data = {
+              //  counter:0
+            //};
+             //<table></table>内规定只允许是<tr>,<td>,<th>等这些表格元素，所以在<table>内直接使用组件是无效的，这种情况下，可以使用特殊的属性来挂载组件 is
+                //如果使用的是字符串模板，是不受限制的
+            //全局声明
+           Vue.component('my-component1',{
+                //选项
+                template:'<button @click="counter++">{{ counter}}</button>',
+                data : function(){
+                    return {
+                        counter : 0
+                    };
+                }
+            });
+            Vue.component('my-component2',{
+                //选项
+                props:['message'],
+                template:'<div>{{message}}</div>'
+            });
+            Vue.component('my-component3',{
+                //选项
+                props:['width'],
+                template:'<div :style="style">组件内容</div>',
+                computed : {
+                    style: function (){
+                    return {
+                        width : this.width + 'px'
+                    }
+                }
+                }
+            });
+            Vue.component('my-component4',{
+                //选项
+                props:{
+                    //必须是数字类型
+                    propA : Number,
+                    //必须是字符串或数字类型
+                    propB:[string,Number],
+                    //布尔值，如果没有定义，默认值就是true
+                    propC:{
+                        type:Boolean,
+                        default:true
+                    },
+                    //数字而且是必传
+                    propD:{
+                        type:Number,
+                        required:true
+                    },
+                    //如果是数组或者对象，默认值必须是一个函数来返回
+                    propE:{
+                        type:Array,
+                        default:function(){
+                            return [];
+                        }
+                    },
+                    //自定义一个验证函数
+                    propF:{
+                        validator:function(value){
+                            return value > 10;
+                        }
+                    }
+                },
+                template:'<div :style="style">组件内容</div>',
+                computed : {
+                    style: function (){
+                    return {
+                        width : this.width + 'px'
+                    }
+                }
+                }
+            });
+          //局部声明加组件嵌套
+          var child = {
+              template:'<div>局部注册组件的内容</div>'
+          }
+            var app =new Vue({
+                    el:'#app',
+                    components : {
+                        'my-component' : child
+                    },
+                    data: {
+                        parentMessage : ''
+                    }
+                })
+        </script>
+    </body>
+</html>
+        
