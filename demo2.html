@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VUEdemo</title>
+    </head>
+    <body>
+        <div id="app">
+            <input type="radio" v-model="picked" value="html" id="html">
+            <label for="html">HTML</label>
+            <br>
+            <input type="radio" v-model="picked" value="js" id="js">
+            <label for="js">JavaScript</label>
+            <br>
+            <input type="radio" v-model="picked" value="css" id="css">
+            <label for="css">CSS</label>
+            <br>
+            <p>选择的项是:{{ picked }}</p>
+
+            <input type="checkbox" v-model="checked" value="html1" id="html1">
+            <label for="html1">HTML1</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="js1" id="js1">
+            <label for="js1">JavaScript1</label>
+            <br>
+            <input type="checkbox" v-model="checked" value="css1" id="css1">
+            <label for="css1">CSS1</label>
+            <br>
+            <p>选择的项是:{{ checked }}</p>
+
+            <select v-model="selected" multiple>
+                <option>html2</option>
+                <option value="js2">JavaScript2</option>
+                <option>css2</option>
+            </select>
+            <p>选择的项是:{{ selected }}</p>
+
+            <select v-model="selected1">
+                <option 
+                    v-for=" option in options"
+                    :value="option.value">{{ option.text }}</option>
+            </select>
+            <p>选择的项是:{{ selected1 }}</p>
+            <input type="text" v-model.lazy="message">
+            <p> {{ message }} </p>
+            <input type="number" v-model.number="message1">
+            <p> {{ typeof message1 }} </p>
+            <input type="text" v-model.trim="message2">
+            <p> {{ message2 }} </p>
+        </div>
+        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+        <script>
+            var padDate = function(value){
+                return value < 10 ? '0' + value : value;
+            };
+            var app =new Vue({
+                    el:'#app',
+                    data: {
+                       picked: 'js',
+                       checked : ['html1','css1'],
+                       selected : ['html2','js2'],
+                       selected1 : 'html3',
+                       options : [
+                           {
+                               text : 'HTML',
+                               value : 'html3'
+                           },
+                           {
+                               text : 'JavaScript',
+                               value : 'js3'
+                           },
+                           {
+                               text : 'CSS',
+                               value : 'css3'
+                           }
+                       ],
+                       message : '',
+                       message1 : 123,
+                       message2 : ''
+                    },
+                    methods:{
+                        
+                    },
+                    filters: {
+                        formatDate : function (value){//这个value就是需要过滤的数据
+                            var date = new Date(value);
+                            var year = date.getFullYear();
+                            var month = padDate(date.getMonth() +1);
+                            var day = padDate(date.getDate());
+                            var hours = padDate(date.getHours());
+                            var minutes = padDate(date.getMinutes());
+                            var seconds = padDate(date.getSeconds());
+                            //将整理好的数据返回
+                            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+                        }
+                    },
+                    computed:{
+                    
+        
+                    }
+                })
+        </script>
+    </body>
+</html>
+        
