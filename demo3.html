@@ -7,8 +7,7 @@
     <body>
         <div id="app">
             <table>
-               
-                <tbody is="my-component"></tbody>
+               <tbody is="my-component"></tbody>
             </table>
          <my-component></my-component>
          <my-component1></my-component1>
@@ -98,7 +97,7 @@
             var app =new Vue({
                     el:'#app',
                     components : {
-                        'my-component' : child
+                       'my-component' : child
                     },
                     data: {
                         parentMessage : ''
